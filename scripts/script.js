@@ -1,20 +1,34 @@
-// Функция для получения данных из API
+// Function to fetch and update prices
 async function fetchPrices() {
     try {
-        const response = await fetch('http://92.118.8.202:8888/api/data'); // Замени URL
+        // URL вашего API
+        const apiUrl = 'http://92.118.8.202:8888/api/data';
+
+        // Прокси URL для обхода CORS
+        const proxiedUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
+
+        // Выполняем запрос к прокси
+        const response = await fetch(proxiedUrl);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
+        
+        // Получаем данные из прокси
         const data = await response.json();
+        
+        // Разбираем данные из содержимого ответа
+        const jsonData = JSON.parse(data.contents);
 
-        document.getElementById('shardify-ton').textContent = data.price_8num_ton + ' TON';
-        document.getElementById('shardify-usd').textContent = data.price_8num_USDT + ' USD';
-        document.getElementById('getgems-ton').textContent = data.price_getgems_ton + ' TON';
-        document.getElementById('getgems-usd').textContent = data.price_getgems_USDT + ' USD';
-        document.querySelectorAll('.link_wrapper a')[1].setAttribute('href', data.link_getgems);
-        document.getElementById('fragment-ton').textContent = data.price_fragment_ton + ' TON';
-        document.getElementById('fragment-usd').textContent = data.price_fragment_USDT + ' USD';
-        document.querySelectorAll('.link_wrapper a')[2].setAttribute('href', data.link_fragment);
+        // Обновляем содержимое страницы
+        document.getElementById('shardify-ton').textContent = jsonData.price_8num_ton + ' TON';
+        document.getElementById('shardify-usd').textContent = jsonData.price_8num_USDT + ' USD';
+        document.getElementById('getgems-ton').textContent = jsonData.price_getgems_ton + ' TON';
+        document.getElementById('getgems-usd').textContent = jsonData.price_getgems_USDT + ' USD';
+        document.querySelectorAll('.link_wrapper a')[1].setAttribute('href', jsonData.link_getgems);
+        document.getElementById('fragment-ton').textContent = jsonData.price_fragment_ton + ' TON';
+        document.getElementById('fragment-usd').textContent = jsonData.price_fragment_USDT + ' USD';
+        document.querySelectorAll('.link_wrapper a')[2].setAttribute('href', jsonData.link_fragment);
+        
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
     }
