@@ -1,7 +1,7 @@
-// Function to fetch and update prices using AllOrigins
+// Функция для получения данных из API через AllOrigins
 async function fetchPrices() {
     try {
-        const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('http://92.118.8.202:8888/api/data'));
+        const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://your-server.com/api/data')); // Замените URL на ваш серверный URL
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
