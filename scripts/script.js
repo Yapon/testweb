@@ -1,7 +1,7 @@
 // Функция для получения данных из API
 async function fetchPrices() {
     try {
-        const response = await fetch('https://your-server.com/api/data'); // Замените URL на ваш серверный URL
+        const response = await fetch('https://1.1.1.1.com/api/data'); // Замени URL
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
